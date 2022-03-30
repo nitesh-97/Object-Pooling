@@ -11,32 +11,30 @@ public class MaterialSelection : MonoBehaviour
     int t = 1;
     int n;
     GameObject Temp;
-    
 
-   
+    //Each button executes this 
     public void OnClick(int i)
     {
+        // Invalid input won't create an error
         if (i > 30) { return; }
-        //if (t > 1)
-        //{
-        //    Temp.SetActive(false);
-        //    t = 1;
-        //}
+
+        //To reuse 10 GameObjects for 30 textures
         if (i <= 10)
         {
             n = i - 1;
             Temp = Objects[n];
-           // Debug.Log("Obj no" + n);
         }
         else
         {
             n = i % 10;
             Temp = Objects[n];
         }
+        // Assign new texture to the material of specific gameobject
         ObjectRender = Temp.GetComponent<Renderer>();
         ObjectRender.sharedMaterial.mainTexture = Texturelist[i-1];
-        Debug.Log("Texture" + (i-1));
-        Instantiate(Temp, TargetPosition.transform.position, Quaternion.identity);
+        
+        //Produce a clone of the modified gameoject at its original location
+        Instantiate(Temp);
         t++;
         GameEvent.current.ButtonClick(n);
     }
